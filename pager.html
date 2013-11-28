@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf8">
 <link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/theme.default.css">
+<link rel="stylesheet" href="css/theme.bootstrap.css">
 <style>
-th, td {
+thead th, tbody td {
   text-align: right;
 }
-th:first-child, td:first-child {
+thead th:first-child, tbody td:first-child {
   text-align: left;
 }
 </style>
@@ -30,6 +30,25 @@ th:first-child, td:first-child {
       <th>人口性比</th>
     </tr>
   </thead>
+  <tfoot>
+    <tr>
+      <td colspan="5" class="ts-pager form-horizontal">
+        <button type="button" class="btn first" title="先頭ページへ移動"><span class="glyphicon glyphicon-step-backward"></span></button>
+        <button type="button" class="btn prev" title="前のページへ移動"><span class="glyphicon glyphicon-backward"></span></button>
+        <span class="pagedisplay" title="開始行 - 終了行 / フィルタ後の行数 (全行数)"></span>
+        <button type="button" class="btn next" title="次のページへ移動"><span class="glyphicon glyphicon-forward"></span></button>
+        <button type="button" class="btn last" title="最後のページヘ移動"><span class="glyphicon glyphicon-step-forward"></span></button>
+        <select class="pagesize" title="1ページあたりの行数">
+          <option value="5">5</option>
+          <option selected="selected" value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+        </select>
+        <select class="pagenum input-mini" title="指定ページへジャンプ"></select>
+      </td>
+    </tr>
+  </tfoot>
   <tbody>
     <tr><td>北海道</td><td>5,486</td><td>2,591</td><td>2,895</td><td>89.5</td></tr>
     <tr><td>青森県</td><td>1,363</td><td>641</td><td>722</td><td>88.7</td></tr>
@@ -79,48 +98,53 @@ th:first-child, td:first-child {
     <tr><td>鹿児島県</td><td>1,699</td><td>794</td><td>905</td><td>87.7</td></tr>
     <tr><td>沖縄県</td><td>1,401</td><td>687</td><td>714</td><td>96.3</td></tr>
   </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="5">
-        <div id="pager">
-          <form>
-            <img src="images/first.png" class="first"/>
-            <img src="images/prev.png" class="prev"/>
-            <input type="text" class="pagedisplay"/>
-            <img src="images/next.png" class="next"/>
-            <img src="images/last.png" class="last"/>
-            <select class="pagesize">
-              <option value="5">5</option>
-              <option selected="selected" value="10">10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-            </select>
-          </form>
-        </div>
-      </td>
-    </tr>
-  </tfoot>
 </table>
 
 <br/>
 参考
 <ul>
-  <li><a href="http://mottie.github.io/tablesorter/docs/example-pager.html">tablesorter pager example</a></li>
+  <li><a href="http://mottie.github.io/tablesorter/docs/example-widget-bootstrap-theme.html">tablesorter pager example with twitter bootstrap theme</a></li>
   <li><a href="http://www.stat.go.jp/data/jinsui/2011np/">統計局ホームページ/人口推計/人口推計（平成23年10月1日現在）</a></li>
 </ul>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/jquery.tablesorter.min.js"></script>
 <script src="js/jquery.tablesorter.pager.min.js"></script>
+<script src="js/jquery.tablesorter.widgets.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() { 
+$(function() { 
+  $.extend($.tablesorter.themes.bootstrap, {
+    table: 'table table-bordered',
+    caption    : 'caption',
+    header     : 'bootstrap-header', // give the header a gradient background
+    footerRow  : '',
+    footerCells: '',
+    icons      : '', // add "icon-white" to make them white; this icon class is added to the <i> in the header
+    sortNone   : 'bootstrap-icon-unsorted',
+    sortAsc    : 'icon-chevron-up glyphicon glyphicon-chevron-up',     // includes classes for Bootstrap v2 & v3
+    sortDesc   : 'icon-chevron-down glyphicon glyphicon-chevron-down', // includes classes for Bootstrap v2 & v3
+    active     : '', // applied when column is sorted
+    hover      : '', // use custom css here - bootstrap class may not override it
+    filterRow  : '', // filter row class
+    even       : '', // odd row zebra striping
+    odd        : ''  // even row zebra striping
+  });
+
   $("#myTable") 
   .tablesorter({
-    theme: "default"
+    theme: "bootstrap",
+    widthFixed: true,
+    headerTemplate: '{content} {icon}',
+    widgets: ['uitheme', 'filter', 'zebra'],
+    widgetOptions: {
+      zebra: ['even', 'odd'],
+      filter_reset: '.reset'
+    }
   }) 
   .tablesorterPager({
-    container: $("#pager")
+    container: $(".ts-pager"),
+    cssGoto: ".pagenum",
+    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
   }); 
 }); 
 </script>
