@@ -35,17 +35,19 @@ thead th:first-child, tbody td:first-child {
       <td colspan="5" class="ts-pager form-horizontal">
         <button type="button" class="btn first" title="先頭ページへ移動"><span class="glyphicon glyphicon-step-backward"></span></button>
         <button type="button" class="btn prev" title="前のページへ移動"><span class="glyphicon glyphicon-backward"></span></button>
-        <span class="pagedisplay" title="開始行 - 終了行 / フィルタ後の行数 (全行数)"></span>
+        <span class="pagedisplay" title="開始行 - 終了行 / フィルタに合致した行数 (全行数)"></span>
         <button type="button" class="btn next" title="次のページへ移動"><span class="glyphicon glyphicon-forward"></span></button>
         <button type="button" class="btn last" title="最後のページヘ移動"><span class="glyphicon glyphicon-step-forward"></span></button>
-        <select class="pagesize" title="1ページあたりの行数">
+        <label for="pagesize" title="1ページあたりの行数">行数／ページ:</label>
+        <select id="pagesize" class="pagesize" title="1ページあたりの行数">
           <option value="5">5</option>
           <option selected="selected" value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
           <option value="40">40</option>
         </select>
-        <select class="pagenum input-mini" title="指定ページへジャンプ"></select>
+        <label for="pagenum" title="指定ページへジャンプ">ページ:</label>
+        <select id="pagenum" class="pagenum input-mini" title="指定ページへジャンプ"></select>
       </td>
     </tr>
   </tfoot>
